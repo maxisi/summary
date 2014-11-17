@@ -96,7 +96,7 @@ ifo=$(echo $IFO | awk '{print tolower($0)}')
 if [[ "${CLARGS}" == *"multi-process"* ]]; then
     MAXPROC=""
 else
-    MAXPROC="--multi-process 20"
+    MAXPROC="--multi-process 40"
 fi
 
 # set maxjobs
