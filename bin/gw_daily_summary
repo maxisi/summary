@@ -11,8 +11,8 @@
 
 . ~/.bash_profile
 
-REPODIR=${HOME}/gwsumm
-CONFIGDIR=${HOME}/summary/config
+REPODIR=${HOME}/summary
+CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
 
 # MI: not sure what this does...
@@ -21,7 +21,16 @@ LOGDIR=${TMPDIR}/summary/logs
 #fi
 
 # refresh configurations (pull from 40m)
-${HOME}/summary/bin/pull40mconfig.exp
+cd ${REPODIR}
+git pull --rebase
+
+rm -r ${CONFIGDIR}/*
+${REPODIR}/bin/pull40mconfig.exp
+
+NOW=$(lalapps_tconvert now)
+git add .
+git commit -m"auto ${NOW}"
+git push
 
 # catch command line options
 CLARGS=$@
