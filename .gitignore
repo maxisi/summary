@@ -1,2 +1,3 @@
 bin/pull40mconfig.exp
 *.nfs*
+*.swp
