@@ -23,7 +23,7 @@ for dir_name, subdir_list, file_list in os.walk(rootdir):
         rightstart = f_name.lower().startswith(prefix.lower())
         # include files tagged "all", if IFO is not C1
         if prefix.lower() != 'c1':
-            rightstart = rightsart or f_name.lower().startswith('all')
+            rightstart = rightstart or f_name.lower().startswith('all')
         if f_name[-3:] == 'ini' and rightstart:
             config_string += ' --config-file ' + os.path.join(dir_name, f_name)
 
