@@ -11,6 +11,8 @@
 
 . ~/.bash_profile
 
+unset X509_USER_PROXY
+
 REPODIR=${HOME}/summary
 CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
