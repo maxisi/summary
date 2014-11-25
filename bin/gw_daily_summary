@@ -11,7 +11,7 @@
 
 . ~/.bash_profile
 
-#unset X509_USER_PROXY
+echo ${X509_USER_PROXY}
 
 REPODIR=${HOME}/summary
 CONFIGDIR=${REPODIR}/config
@@ -122,8 +122,7 @@ fi
 
 # set arguments
 DEFAULTCONFIG=${CONFIGDIR}/defaults.ini
-UNIVERSE="standard"
-# "local"
+UNIVERSE="local"
 TIMEOUT="12"
 OPTIONS="--verbose --archive --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
 ARGUMENTS=$(eval echo ${CLARGS})
