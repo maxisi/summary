@@ -76,6 +76,7 @@ set -e
 # set output directory
 RUN_DIRECTORY=$HOME/public_html/summary/
 mkdir -p ${RUN_DIRECTORY}
+rm ${RUN_DIRECTORY}gw_summary_pipe.dag*
 cd ${RUN_DIRECTORY}
 echo "Moved to output directory ${RUN_DIRECTORY}"
 echo "----------"
