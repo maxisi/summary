@@ -95,13 +95,6 @@ fi
 
 ifo=$(echo $IFO | awk '{print tolower($0)}')
 
-# set maximum number of processes per node
-if [[ "${CLARGS}" == *"multi-process"* ]]; then
-    MAXPROC=""
-else
-    MAXPROC="--multi-process 20"
-fi
-
 # set configuration
 if [[ "${CLARGS}" == *"config-file"* ]]; then
     CONFIGARG=""
@@ -118,10 +111,12 @@ fi
 DEFAULTCONFIG=${CONFIGDIR}/defaults.ini
 UNIVERSE="local"
 TIMEOUT="12"
-OPTIONS="gps 1099869601 1099870601 --verbose --ifo ${IFO} -f ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG}"
+OPTIONS="gps 1099869601 1099870601 --multi-process 20 --verbose --ifo ${IFO} -f ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG}"
 ARGUMENTS=$(eval echo ${CLARGS})
 
 # run job
 echo "Executing:"
 echo
 echo "gw_summary ${OPTIONS} ${ARGUMENTS}"
+
+gw_summary ${OPTIONS} ${ARGUMENTS}
