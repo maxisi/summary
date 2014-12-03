@@ -104,14 +104,14 @@ ifo=$(echo $IFO | awk '{print tolower($0)}')
 if [[ "${CLARGS}" == *"multi-process"* ]]; then
     MAXPROC=""
 else
-    MAXPROC="--multi-process 10"
+    MAXPROC="--multi-process 20"
 fi
 
 # set maxjobs
 if [[ "${CLARGS}" == *"maxjobs"* ]]; then
     MAXJOBS=""
 else
-    MAXJOBS="--maxjobs 10"
+    MAXJOBS="--maxjobs 2"
 fi
 
 # set configuration
