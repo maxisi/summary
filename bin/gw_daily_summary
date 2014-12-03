@@ -77,11 +77,11 @@ set -e
 RUN_DIRECTORY=$HOME/public_html/summary/
 mkdir -p ${RUN_DIRECTORY}
 # clean previous DAGs
-{
-    rm ${RUN_DIRECTORY}gw_summary_pipe*
-} || {
-echo "No previous DAGs."
-}
+#{
+#    rm ${RUN_DIRECTORY}gw_summary_pipe*
+#} || {
+#echo "No previous DAGs."
+#}
 cd ${RUN_DIRECTORY}
 echo "Moved to output directory ${RUN_DIRECTORY}"
 echo "----------"
