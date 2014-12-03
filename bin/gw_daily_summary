@@ -92,7 +92,7 @@ if [[ "$(hostname -f)" == *"ligo-la"* ]]; then
 elif [[ "$(hostname -f)" == *"ligo-wa"* ]]; then
     IFO="H1"
 elif [[ "$(hostname -f)" == *"ligo.caltech"* ]]; then
-    IFO="All"
+    IFO="C1"
 elif [[ -z "${IFO}" ]]; then 
     echo "Cannot determine IFO, either give via '--ifo=X1' of set IFO environment variable" >&2
     exit 1
