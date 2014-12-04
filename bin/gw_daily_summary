@@ -129,7 +129,7 @@ fi
 # set arguments
 DEFAULTCONFIG=${CONFIGDIR}/defaults.ini
 UNIVERSE="local"
-TIMEOUT="12"
+TIMEOUT="2"
 OPTIONS="--verbose --archive --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
 ARGUMENTS=$(eval echo ${CLARGS})
 
