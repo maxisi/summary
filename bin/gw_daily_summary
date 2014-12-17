@@ -30,7 +30,7 @@ git pull --rebase
 rm -r ${CONFIGDIR}/*
 
 # pull from nodus
-${REPODIR}/bin/pull40mconfig.exp
+# ${REPODIR}/bin/pull40mconfig.exp
 
 # pull from llocds
 cd ${CONFIGDIR}
