@@ -1,4 +1,4 @@
 bin/pull40mconfig.exp
 *.nfs*
 *.swp
-etc/llocds-cookies.txt
+etc/*cookies.txt
