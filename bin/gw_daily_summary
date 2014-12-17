@@ -4,6 +4,7 @@
 # LIGO daily summary page script
 #
 # Author: Duncan Macleod <duncan.macleod@ligo.org>
+# Modiefied by: Max
 #
 # A pipeline is generated using the gw_summary_pipe DAG generator
 # before this DAG is submitted to the condor job scheduler
@@ -22,13 +23,21 @@ LOGDIR=${TMPDIR}/summary/logs
 #    unset X509_USER_PROXY
 #fi
 
-# refresh configurations (pull from 40m)
+# refresh configurations
 cd ${REPODIR}
 git pull --rebase
 
 rm -r ${CONFIGDIR}/*
+
+# pull from nodus
 ${REPODIR}/bin/pull40mconfig.exp
 
+# pull from llocds
+cd ${CONFIGDIR}
+wget --reject "index.html*" --random-wait -e robots=off --load-cookies=${REPODIR}/etc/cookies.txt --recursive --no-parent -l1 --no-directories https://llocds.ligo-la.caltech.edu:443/data/rana.adhikari/gwsumm-config/
+
+# push
+cd ${REPODIR}
 NOW=$(lalapps_tconvert now)
 git add .
 git commit -m"auto ${NOW}"
