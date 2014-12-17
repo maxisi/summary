@@ -2,10 +2,10 @@
 INFORMATION ABOUT THE CONFIG FILE TRANSFER SETUP FOR THE SUMMARY PAGES
 ------------------------------------------------------------------------------
 Max Isi - misi@ligo.caltech.edu
-Updated: Dec 17, 2014
+Updated: Nov 17, 2014
 ------------------------------------------------------------------------------
 
-The contents of this directory (/data/rana.adhikari/gwsumm-config/) are synced
+The contents of this directory (/users/public_html/gwsumm-config/) are synced
 to LDAS so that they can be used to generate the detector summary pages using
 the gwsumm package (https://github.com/gwpy/gwsumm).
 
@@ -33,5 +33,5 @@ For information on the INI format itself see: https://ldas-jobs.ligo.caltech.edu
 
 Pages URLs:
 L1 : https://ldas-jobs.ligo-la.caltech.edu/~max.isi/summary/day/20141117/
-H1 : https://ldas-jobs.ligo-wa.caltech.edu/~max.isi/summary/day/20141117/
+H1 : https://ldas-jobs.ligo-wa.caltech.edu/~max.isi/summary/day/20141117/ (DOWN)
 C1 : https://ldas-jobs.ligo.caltech.edu/~max.isi/summary/day/20141117/
