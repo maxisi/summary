@@ -1,4 +1,4 @@
-bin/pull40mconfig.exp
+bin/pull41mconfig.exp
 *.nfs*
 *.swp
-etc/*cookies.txt
+etc/cookies.txt
