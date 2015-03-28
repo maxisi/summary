@@ -54,7 +54,8 @@ LALSUITE_TAG=de671f
 . /home/detchar/opt/lalsuite/${LALSUITE_TAG}/etc/lalsuiterc
 
 # set GWpy environment
-. /home/detchar/opt/gwpysoft/etc/gwpy-user-env.sh
+. /home/max.isi/.bashrc
+#. /home/detchar/opt/gwpysoft/etc/gwpy-user-env.sh
 
 echo "Environment set"
 
