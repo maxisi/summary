@@ -11,18 +11,16 @@ name = Summary
 layout = 2
 ; DARM
 1 = C1:LSC-DARM_OUT_DQ plot-hoft-spectrum 
-1-ylim = 1e-9, 10
 ; POP etc
 2 = C1:LSC-REFLDC_OUT_DQ.mean,
     C1:LSC-POPDC_OUT_DQ.mean,
+    C1:PSL-PMC_PMCTRANSPD.mean,
     C1:IOO-MC_TRANS_SUM.mean timeseries
-3 = C1:LSC-TRX_OUT16.mean,
-    C1:LSC-TRY_OUT16.mean timeseries
 
 [tab-Sample]
 name = Sample
 layout = 2
-samplechannel = C1:IOO-MC_F_DQ
+samplechannel = C1:IOO-MC_TRANS_P
 ; Spectrogram
 1 = %(samplechannel)s spectrogram
 1-format = 'amplitude'
@@ -45,23 +43,23 @@ name = PSL
 layout = 2
 1 = C1:PSL-FSS_RMTEMP.mean timeseries
 1-title = Room Temperature
-1-ylim = 20, 26
-; 1 year trend done to set above limits
+1-ylim = 15, 30
 2 = C1:PSL-FSS_SLOWDC.mean timeseries
-2-title = NPRO Slow actuator (1 GHz/V)
-2-ylim = -3, 3
+2-title = DC offset adjust of s
+2-ylim = -0.5, 0.5
 3 = C1:PSL-PMC_PZT.mean timeseries
-3-title = PMC PZT Voltage
+3-title = PMC PZT output
 3-ylim = 0, 300
 4 = C1:PSL-PMC_PMCTRANSPD.mean timeseries
-4-title = Pre-modecleaner Transmission
+4-title = Pre-modecleaner t
 4-ylim = 0, 1
-5 = C1:PSL-PMC_RFPDDC.mean timeseries
-5-title = Pre-modecleaner Reflected Light
-5-ylim = 0, 1
-6 = C1:PSL-FSS_PCDRIVE.mean timeseries
-6-title = FSS EOM V_RMS
-6-ylim = 0, 10
+5 = C1:PSL-FSS_PCDRIVE.mean timeseries
+5-title = Reference cavity Poc
+5-ylim = 0, 10
+6 = C1:LSC-TRX_OUT16.mean,
+    C1:LSC-TRY_OUT16.mean timeseries
+6-title = LSC
+6-ylim = 0, 3
 7 = C1:IOO-QPD_ANG_HOR.mean,
     C1:IOO-QPD_ANG_VERT.mean timeseries
 7-ylim = -2, 2
@@ -81,20 +79,6 @@ layout = 2
 3 = C1:IOO-MC_RFPD_DCMON.mean timeseries
 3-title = MC RFPD DC Monitor Readback
 3-ylim = 0, 2
-
-[tab-PEM]
-name = PEM
-layout = 1
-1 = C1:PEM-SEIS_GUR1_X,
-    C1:PEM-SEIS_GUR2_X,
-    C1:PEM-SEIS_STS_1_X_OUT_DQ plot-spectrum
-2 = C1:PEM-SEIS_GUR1_Y,
-    C1:PEM-SEIS_GUR2_Y,
-    C1:PEM-SEIS_STS_1_Y_OUT_DQ plot-spectrum
-3 = C1:PEM-SEIS_GUR1_Z,
-    C1:PEM-SEIS_GUR2_Z,
-    C1:PEM-SEIS_STS_1_Z_OUT_DQ plot-spectrum
-
 
 ; ------------------------------------------------------------------------
 ; plots
