@@ -15,15 +15,18 @@ layout = 2
 2 = C1:LSC-REFLDC_OUT_DQ.mean,s-trend,
     C1:LSC-POPDC_OUT_DQ.mean,s-trend,
     C1:IOO-MC_TRANS_SUM.mean,s-trend timeseries
+; Arm cavity power transmission
 3 = C1:LSC-TRX_OUT16.mean,s-trend,
     C1:LSC-TRY_OUT16.mean,s-trend timeseries
+3-ylim = 0,1.1
+3-legend-loc = 'lower left'
 
 [C1:LSC-DARM_OUT_DQ]
-frequency-range = 10,4096
+frequency-range = 10, 7400
 
 ;-------------------------------------------------------------------------
 [tab-Sample]
-name = Sample
+name = SandBox
 layout = 2
 samplechannel = C1:IOO-MC_F_DQ
 ; Spectrogram
@@ -36,6 +39,7 @@ samplechannel = C1:IOO-MC_F_DQ
 1-title = Sample spectrogram
 ; Spectrum
 2 = %(samplechannel)s spectrum
+2-ylim = 1e-6,1e4
 ; Rayleigh spectrogram
 3 = %(samplechannel)s plot-rayleigh-spectrogram
 3-title = Sample Rayleigh spectrogram 
@@ -44,28 +48,34 @@ samplechannel = C1:IOO-MC_F_DQ
 4-title = Sample Rayleigh spectrum
 
 [C1:IOO-MC_F_DQ]
-frequency-range = 0.1,10
+frequency-range = 0.1,1000
 
 ;-------------------------------------------------------------------------
 [tab-PSL]
 name = PSL
 layout = 2
 1 = C1:PSL-FSS_RMTEMP.mean timeseries
-1-title = Room Temperature
+1-title = PSL Table Temperature
 1-ylim = 20, 26
+1-ylabel = 'deg C'
 ; 1 year trend done to set above limits
 2 = C1:PSL-FSS_SLOWDC.mean timeseries
-2-title = NPRO Slow actuator (1 GHz/V)
+2-title = NPRO Slow actuator (3 GHz/V)
 2-ylim = -3, 3
 3 = C1:PSL-PMC_PZT.mean timeseries
 3-title = PMC PZT Voltage
 3-ylim = 0, 300
+3-legend-loc = 'lower left'
+3-ylabel = 'Volts'
+
 4 = C1:PSL-PMC_PMCTRANSPD.mean timeseries
 4-title = Pre-modecleaner Transmission
-4-ylim = 0, 1
+4-ylim = 0.6, 0.9
+
 5 = C1:PSL-PMC_RFPDDC.mean timeseries
 5-title = Pre-modecleaner Reflected Light
-5-ylim = 0, 1
+5-ylim = 0, 0.1
+
 6 = C1:PSL-FSS_PCDRIVE.mean timeseries
 6-title = r'FSS EOM $V_{\rm RMS}$'
 6-ylim = 0, 10
@@ -74,22 +84,56 @@ layout = 2
 7-ylim = -2, 2
 7-title = IOO
 8 = C1:PSL-FSS_FAST.mean timeseries
-8-title= Fast actuator input
+8-title= r'NPRO PZT (1.1 MHz/V)'
 8-ylim = -5, 5
-
+8-ylabel = 'Volts'
 ;-------------------------------------------------------------------------
 [tab-IOO]
 name = IOO
 layout = 2
 1 = C1:IOO-MC_TRANS_SUM.mean timeseries
-1-ylim = 0, 20000
+1-ylim = 14000, 20000
+1-legend-loc = 'lower left'
 2 = C1:IOO-MC_TRANS_P.mean,
     C1:IOO-MC_TRANS_Y.mean timeseries
-2-ylim = -1, 1
+2-ylim = -0.1, 0.1
 3 = C1:IOO-MC_RFPD_DCMON.mean timeseries
-3-title = MC RFPD DC Monitor Readback
-3-ylim = 0, 2
+3-title = MC RFPD DC
+3-ylim = 0, 1
+3-ylabel = r'Volts'
+;-------------------------------------------------------------------------
+[tab-SUS]
+name = SUS
+layout = 2
+1 = C1:SUS-MC1_SUSPIT_INMON.mean,
+    C1:SUS-MC2_SUSPIT_INMON.mean,
+    C1:SUS-MC3_SUSPIT_INMON.mean timeseries
+1-title = IMC PIT
+;1-ylim = 20, 26
+1-ylabel = 'microradians'
 
+2 = C1:SUS-MC1_SUSYAW_INMON.mean,
+    C1:SUS-MC2_SUSYAW_INMON.mean,
+    C1:SUS-MC3_SUSYAW_INMON.mean timeseries
+2-title = IMC YAW
+2-ylabel = 'microradians'
+
+3 = C1:SUS-ETMX_SUSPIT_INMON.mean,
+    C1:SUS-ETMY_SUSPIT_INMON.mean,
+    C1:SUS-ITMX_SUSPIT_INMON.mean,
+    C1:SUS-ITMY_SUSPIT_INMON.mean timeseries
+3-title = Test Mass SUS Pitch
+3-ylabel = 'microradians'
+
+4 = C1:SUS-ETMX_SUSPIT_INMON.mean,
+    C1:SUS-ETMY_SUSPIT_INMON.mean,
+    C1:SUS-ITMX_SUSPIT_INMON.mean,
+    C1:SUS-ITMY_SUSPIT_INMON.mean timeseries
+4-title = Test Mass SUS Pitch
+4-ylabel = 'microradians'
+
+
+;-------------------------------------------------------------------------
 ;-------------------------------------------------------------------------
 [tab-PEM]
 name = PEM
@@ -106,7 +150,7 @@ layout = 1
 
 [plot-pem-spectrum]
 type = spectrum
-ylim = 1e-10, 1e3
+ylim = 1e-8, 1e3
 xlabel = Frequency [Hz]
 legend-loc = 'lower left'
 
@@ -120,11 +164,12 @@ channels = C1:PEM-SEIS_GUR1_X,
            C1:PEM-SEIS_GUR1_Z,
            C1:PEM-SEIS_GUR2_Z,
            C1:PEM-SEIS_STS_1_Z_OUT_DQ
-frequency-range = 0.1,1e3
+frequency-range = 0.01, 50
 
+;-------------------------------------------------------------------------
 ; ------------------------------------------------------------------------
 ; SOME CUSTOM PLOT TYPES 
-
+;-------------------------------------------------------------------------
 [plot-hoft-spectrogram]
 type = 'spectrogram'
 format = 'amplitude'
@@ -141,3 +186,5 @@ logx = True
 ylabel = r'GW amplitude spectral density'
 logy = True
 legend-loc = 'upper right'
+;-------------------------------------------------------------------------
+
