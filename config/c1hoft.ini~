@@ -55,11 +55,12 @@ layout = 2
 1 = C1:PSL-FSS_RMTEMP.mean timeseries
 1-title = PSL Table Temperature
 1-ylim = 20, 26
-1-ylabel = 'deg C'
+1-ylabel = 'deg [C]'
 ; 1 year trend done to set above limits
 2 = C1:PSL-FSS_SLOWDC.mean timeseries
 2-title = NPRO Slow actuator (3 GHz/V)
 2-ylim = -3, 3
+
 3 = C1:PSL-PMC_PZT.mean timeseries
 3-title = PMC PZT Voltage
 3-ylim = 0, 300
@@ -109,16 +110,26 @@ layout = 2
 4-ylim = -5000, 5000
 4-legend-loc = 'lower left'
 
-;2 = C1:IOO-MC_TRANS_P.mean,
-;    C1:IOO-MC_TRANS_Y.mean timeseries
-;2-ylim = -0.1, 0.1
-;2-title = MC2 Trans QPD
+5 = C1:IOO-WFS1_PIT_OUT16.mean,
+    C1:IOO-WFS1_YAW_OUT16.mean,
+    C1:IOO-WFS2_PIT_OUT16.mean,
+    C1:IOO-WFS2_YAW_OUT16.mean timeseries
+;5-ylim = -0.1, 0.1
+5-ylabel = r'Torque [arb]'
+5-title = IMC WFS Feedback Control signals
 
 
 ;-------------------------------------------------------------------------
 [tab-SUS]
 name = SUS
 layout = 2
+
+;----------------------------------------------
+[tab-Drift]
+name = SUSdrift
+layout = 2
+parent = SUS
+
 1 = C1:SUS-MC1_SUSPIT_INMON.mean,
     C1:SUS-MC2_SUSPIT_INMON.mean,
     C1:SUS-MC3_SUSPIT_INMON.mean timeseries
@@ -146,6 +157,19 @@ layout = 2
 4-title = Test Mass SUS Yaw
 4-ylabel = 'microradians'
 
+;----------------------------------------------------
+[tab-OpLev]
+name = OpLev
+parent = SUS
+layout = 2
+1 = C1:SUS-ETMX_OL_PIT_INMON.mean,
+    C1:SUS-ETMX_OL_YAW_INMON.mean,
+    C1:SUS-ETMY_OL_PIT_INMON.mean,
+    C1:SUS-ETMY_OL_YAW_INMON.mean timeseries
+1-title = r'ETM OL trends'
+1-ylabel = r'microradians'
+;----------------------------------------------------
+
 
 ;-------------------------------------------------------------------------
 ;-------------------------------------------------------------------------
@@ -166,6 +190,27 @@ layout = 2
     C1:PEM-SEIS_GUR2_Z,
     C1:PEM-SEIS_STS_1_Z_OUT_DQ plot-pem-spectrum
 3-title = Z direction (vertical) velocity
+
+4 = C1:PEM-RMS_GUR1X_0p1_0p3.mean,
+    C1:PEM-RMS_GUR1Y_0p1_0p3.mean,
+    C1:PEM-RMS_GUR1Z_0p1_0p3.mean timeseries
+4-title = '0.1-0.3 Hz, Band Limited RMS Velocity'
+
+5 = C1:PEM-RMS_GUR1X_0p3_1.mean,
+    C1:PEM-RMS_GUR1Y_0p3_1.mean,
+    C1:PEM-RMS_GUR1Z_0p3_1.mean timeseries
+5-title = '0.3-1 Hz, Band Limited RMS Velocity'
+
+6 = C1:PEM-RMS_GUR1X_1_3.mean,
+    C1:PEM-RMS_GUR1Y_1_3.mean,
+    C1:PEM-RMS_GUR1Z_1_3.mean timeseries
+6-title = '1-3 Hz, Band Limited RMS Velocity'
+
+7 = C1:PEM-RMS_GUR1X_3_10.mean,
+    C1:PEM-RMS_GUR1Y_3_10.mean,
+    C1:PEM-RMS_GUR1Z_3_10.mean timeseries
+7-title = '3-10 Hz, Band Limited RMS Velocity'
+   
 ;-------------------------------------------------------------------------
 [tab-Sandbox]
 name = SandBox
