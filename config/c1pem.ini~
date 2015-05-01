@@ -44,3 +44,29 @@ layout = 2
 1-colorlabel = r'Velocity [$(\mu m/s)/\sqrt{\mathrm{Hz}}$]'
 1-ylabel = 'Frequency [Hz]'
 1-title = Vertical Ground Velocity
+
+;-------------------------------------------------------------------------
+;-------------------------------------------------------------------------
+[plot-pem-spectrum]
+type = spectrum
+ylim = 1e-4, 1e3
+ylabel = r'Velocity [$(\mu m/s)/\sqrt{Hz}$]'
+xlabel = r'Frequency [Hz]'
+legend-loc = 'lower left'
+
+[channels-PEM]
+channels = C1:PEM-SEIS_GUR1_X,
+           C1:PEM-SEIS_GUR2_X,
+           C1:PEM-SEIS_STS_1_X_OUT_DQ,
+           C1:PEM-SEIS_GUR1_Y,
+           C1:PEM-SEIS_GUR2_Y,
+           C1:PEM-SEIS_STS_1_Y_OUT_DQ,
+           C1:PEM-SEIS_GUR1_Z,
+           C1:PEM-SEIS_GUR2_Z,
+           C1:PEM-SEIS_STS_1_Z_OUT_DQ
+frequency-range = 0.01, 50
+fftlength = 240
+overlap = 120
+stride = 360
+;-------------------------------------------------------------------------
+;-------------------------------------------------------------------------
