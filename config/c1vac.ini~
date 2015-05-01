@@ -12,9 +12,7 @@ layout = 1
 ;1-legend-loc = 'lower left'
 1-title = r'Main Vacuum Pressure channels'
 1-logy = True
-1-ylim = 1e-8,1
 
 ; Instrument air stuff
 2 = C1:Vac-N2pres.mean timeseries
 2-title = r'valve drive pneumatic (huh?)'
-2-ylim = 0,100
