@@ -89,8 +89,9 @@ parent = SUS
     C1:SUS-ETMX_LLPD_VAR,
     C1:SUS-ETMX_SDPD_VAR timeseries
 2-title = ETMX
-2-ylim = 0, 300
+2-ylim = 0.1, 300
 2-ylabel = 'mV rms'
+2-logy = True
 
 3 = C1:SUS-ETMY_ULPD_VAR,
     C1:SUS-ETMY_LLPD_VAR,
