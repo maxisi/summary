@@ -43,7 +43,7 @@ layout = 2
 6-title = Z direction (vertical) velocity
 
 ;===============================================================
-[tab-SEIS_BLRMS]
+[tab-BLRMS]
 name = Seismic BLRMS
 layout = 2
 parent = PEM
