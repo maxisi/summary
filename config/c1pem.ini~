@@ -44,6 +44,7 @@ parent = PEM
 7-format = 'amplitude'
 7-logy = True
 7-logcolor = True
+7-clim = 0.003, 300
 7-colorlabel = r'Velocity [$(\mu m/s)/\sqrt{\mathrm{Hz}}$]'
 7-ylabel = 'Frequency [Hz]'
 7-title = Horizontal (X) Ground Velocity
@@ -52,6 +53,7 @@ parent = PEM
 9-format = 'amplitude'
 9-logy = True
 9-logcolor = True
+9-clim = 0.003, 300
 9-colorlabel = r'Velocity [$(\mu m/s)/\sqrt{\mathrm{Hz}}$]'
 9-ylabel = 'Frequency [Hz]'
 9-title = Horizontal (Y) Ground Velocity
@@ -60,6 +62,7 @@ parent = PEM
 11-format = 'amplitude'
 11-logy = True
 11-logcolor = True
+11-clim = 0.003, 300
 11-colorlabel = r'Velocity [$(\mu m/s)/\sqrt{\mathrm{Hz}}$]'
 11-ylabel = 'Frequency [Hz]'
 11-title = Vertical Ground Velocity
@@ -67,17 +70,17 @@ parent = PEM
 ; Spectrogram
 8 = C1:PEM-SEIS_STS_1_X_OUT_DQ plot-median-spectrogram
 8-format = 'amplitude'
-8-clim = 0.003, 300
+;8-clim = 0.003, 300
 8-title = Horizontal (X) Ground Velocity
 
 10 = C1:PEM-SEIS_STS_1_Y_OUT_DQ plot-median-spectrogram
 10-format = 'amplitude'
-10-clim = 0.003, 300
+;10-clim = 0.003, 300
 10-title = Horizontal (Y) Ground Velocity
 
 12 = C1:PEM-SEIS_STS_1_Z_OUT_DQ plot-median-spectrogram
 12-format = 'amplitude'
-12-clim = 0.003, 300
+;12-clim = 0.003, 300
 12-title = Horizontal (Z) Ground Velocity
 
 
