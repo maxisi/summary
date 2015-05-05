@@ -17,6 +17,8 @@ echo ${X509_USER_PROXY}
 REPODIR=${HOME}/summary
 CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
+NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
+NODUSWEB=/users/public_html/detcharsummary
 
 # MI: not sure what this does...
 #if [ "${USER}" == "detchar" ]; then
@@ -30,7 +32,8 @@ git pull --rebase
 rm -r ${CONFIGDIR}/*
 
 # pull from nodus
-${REPODIR}/bin/pull40mconfig.exp
+scp -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/* /home/max.isi/summary/config/
+
 
 # pull from llocds
 cd ${CONFIGDIR}
@@ -172,8 +175,12 @@ done
 echo "DAG has exited"
 if [ -f ${DAGFILE}.rescue001 ]; then
     echo "Something broke, the rescue DAG was generated." 1>&2
+    # push to 40m
+    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 1
 else
     echo "Summary page run complete!"
+    # push to 40m
+    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 0
 fi
