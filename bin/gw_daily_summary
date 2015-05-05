@@ -34,11 +34,6 @@ rm -r ${CONFIGDIR}/*
 # pull from nodus
 scp -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/* /home/max.isi/summary/config/
 
-
-# pull from llocds
-cd ${CONFIGDIR}
-wget --reject "index.html*" --random-wait -e robots=off --load-cookies=${REPODIR}/etc/cookies.txt --recursive --no-parent -l1 --no-directories https://llocds.ligo-la.caltech.edu:443/data/rana.adhikari/gwsumm-config/
-
 # push
 cd ${REPODIR}
 NOW=$(lalapps_tconvert now)
