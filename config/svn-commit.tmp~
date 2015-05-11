@@ -1,10 +1,6 @@
 
 --This line, and those below, will be ignored--
 
-D    Vacuum.ini.bak
-D    Weather.ini
-D    VAC.ini.150430
-D    README.txt.old
-D    c1hoft.ini.150423
-D    c1hoft.ini.150426
-D    c1hoft.rana
+M    c1ioo.ini
+A    c1sandbox.ini
+M    c1hoft.ini
