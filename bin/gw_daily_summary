@@ -19,11 +19,16 @@ CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
 NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
 NODUSWEB=/users/public_html/detcharsummary
+RUN_DIRECTORY=$HOME/public_html/summary/
 
 # MI: not sure what this does...
 #if [ "${USER}" == "detchar" ]; then
 #    unset X509_USER_PROXY
 #fi
+
+# clean logs
+{
+  rm $
 
 # refresh configurations
 cd ${REPODIR}
@@ -82,14 +87,19 @@ fi
 set -e
 
 # set output directory
-RUN_DIRECTORY=$HOME/public_html/summary/
 mkdir -p ${RUN_DIRECTORY}
 # clean previous DAGs
-#{
-#    rm ${RUN_DIRECTORY}gw_summary_pipe*
-#} || {
-#echo "No previous DAGs."
-#}
+{
+  rm ${RUN_DIRECTORY}/gw_summary_pipe*
+} || {
+  echo "No previous DAGs."
+}
+# clean previous logs
+{
+  rm ${RUN_DIRECTORY}/logs/*
+} || {
+  echo "No previous logs."
+}
 cd ${RUN_DIRECTORY}
 echo "Moved to output directory ${RUN_DIRECTORY}"
 echo "----------"
