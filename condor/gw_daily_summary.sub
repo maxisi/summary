@@ -12,7 +12,7 @@ error = /usr1/max.isi/summary/gw_daily_summary.err
 log = /usr1/max.isi/summary/gw_daily_summary.log
 
 on_exit_remove = false
-cron_minute = 0,30
+cron_minute = 0
 cron_hour = *
 cron_day_of_month = *
 cron_month = *
