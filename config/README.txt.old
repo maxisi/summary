@@ -23,7 +23,7 @@ C1 summaries, but ignored otherwise. Files with the prefix 'all-' will be used
 for all IFOs. A special case is the 'defaults.ini' file, which contains HTML
 and other general information. Although this file is always loaded, its
 settings can be overwritten by custom files (e.g. if the same property is
-defined in 'defaults.ini' and 'c1-lsc.ini', the later will take presedence).
+defined in 'defaults.ini' and 'c1-lsc.ini', the latter will take precedence).
 
 The remote LDAS folder mirrors the local nodus one. Version control is
 implemented in the remote folder by means of a Git repository. If you want to 
