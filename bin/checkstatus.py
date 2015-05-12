@@ -19,15 +19,18 @@ filedict = {}
 filesfound = 0
 if os.path.isdir(logdir):
     pathmask = os.path.join(logdir, "gw_summary_pipe-*.out")
+    print "Looking for files matching: %s." % pathmask
     # get all out log files
     for outfile in glob(pathmask):
-        fileid = os.path.basename(outfile).strip('gw_summary_pipe').\
-            strip('.out')
+        filename = os.path.basename(outfile)
+        print("Checking %s. " % filename)
+        fileid = filename.strip('gw_summary_pipe').strip('.out')
         tablist = []
         with open(outfile, 'r') as fout:
             lines = fout.readlines()
             # check file has the right date
-            if lines[5].startswith("Start time") and lines[5].split()[2]:
+            if lines[6].startswith("Start time") and lines[6].split()[2]:
+                print("File is valid.\n")
                 filesfound += 1
                 # find tabs included in file
                 for line in lines:
@@ -45,15 +48,26 @@ if os.path.isdir(logdir):
                 # add entry for file: first element tabs, second error message
                 filedict[fileid] = [tabstring, '']
                 # open corresponding err file
-                errfile = os.path.join(logdir, "gw_summary_pipe-%s.err" %
+                errfile = os.path.join(logdir, "gw_summary_pipe%s.err" %
                                        fileid)
                 with open(errfile, 'r') as ferr:
                     filedict[fileid][1] = ferr.read()
+            else:
+                print("File not valid.\n")
+else:
+    print "Log directory not found (%r)." % logdir
 
 # GET STATUS: 0, alive; 1, dead; 2, maintenance.
 codestatus = 1
 STATUSPATH = os.path.join(os.environ['TMPDIR'], 'summary/', 'status')
-if loadtxt(STATUSPATH) == 0:
+try:
+    manualstatus = loadtxt(STATUSPATH)
+    print "Manual status code is %r." % manualstatus
+except IOError:
+    manualstatus = 0
+    print "Manual status file not found: %r." % STATUSPATH
+    
+if manualstatus == 0:
     # check condor queue
     USER = os.environ['USER']
     cmd = subprocess.Popen('condor_q %s' % USER, shell=True,
@@ -62,6 +76,7 @@ if loadtxt(STATUSPATH) == 0:
         if "gw_daily_summary" in line:
             if line.split()[5] != 'H':
                 codestatus = 0
+                print "Condor job OK."
 else:
     codestatus = 2
 
@@ -105,8 +120,10 @@ contentlines += [
 
 for fileid, contents in filedict.iteritems():
     name = contents[0].strip('/')
-    logurl = "logs/gw_summary_pipe-%s.log" % fileid
-    errurl = "logs/gw_summary_pipe-%s.err" % fileid
+    if name == '':
+        name = "Unknown name"
+    logurl = "logs/gw_summary_pipe%s.out" % fileid
+    errurl = "logs/gw_summary_pipe%s.err" % fileid
     if contents[1] == '':
         filestatus = '<font color="green">OK</font>'
     else:
@@ -114,8 +131,8 @@ for fileid, contents in filedict.iteritems():
         # in the future, we can also show error message directly rather than
         # just linking to the error file.
 
-    statusline = '<li>%s (<a href="%s" target="_blank"> log</a>\n, ' \
-                 '<a href="%s" target="_blank">err</a>: %s</li>\n.' \
+    statusline = '<li>%s (<a href="%s" target="_blank">log</a>, ' \
+                 '<a href="%s" target="_blank">err</a>): %s.</li>\n' \
                  % (name, logurl, errurl, filestatus)
     contentlines.append(statusline)
 
@@ -222,6 +239,8 @@ footerlines = [
 
 htmllines = headerlines + contentlines + footerlines
 
-with open('status.html', 'w') as f:
+htmlpath = 'status.html'
+with open(htmlpath, 'w') as f:
     for line in htmllines:
         f.write(line)
+    print "HTML written to %r" % htmlpath 

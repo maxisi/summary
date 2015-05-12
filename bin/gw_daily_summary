@@ -26,10 +26,6 @@ RUN_DIRECTORY=$HOME/public_html/summary/
 #    unset X509_USER_PROXY
 #fi
 
-# clean logs
-{
-  rm $
-
 # refresh configurations
 cd ${REPODIR}
 git pull --rebase
