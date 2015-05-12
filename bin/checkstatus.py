@@ -86,21 +86,21 @@ if codestatus == 0:
         '<h2>Code status: '
         '<font color="green">alive</font></h2>\n',
         '<p>The code is currently running.</p>\n',
-        '<p> If some of the plots are not dislaying correctly, check the'
+        '<p> If some of the plots are not dislaying correctly, check the '
         'status of the individual configuration files below to see if there '
-        'are syntax errors (click on the "err" link to see the error message,'
+        'are syntax errors (click on the "err" link to see the error message, '
         'if one was produced).</p>\n',
         '<p>If you still think something else is wrong,'
-        ' <a href="mailito:misi@ligo.caltech.edu" target="_blank">report an'
+        ' <a href="mailito:misi@ligo.caltech.edu" target="_blank">report an '
         'issue</a>.</p>\n'
     ]
 elif codestatus == 2:
     contentlines = [
         '<h2>Code status: '
-        '<font color="yellow">testing</font></h2>\n',
+        '<font color="orange">testing</font></h2>\n',
         '<p>The code is currently undergoing maintenance.</p>\n',
-        '<p>While fixes are being implemented functionality might be reduced.'
-        'However, this should be temporary. If you still think something is'
+        '<p>While fixes are being implemented functionality might be reduced. '
+        'However, this should be temporary. If you still think something is '
         'wrong, <a href="mailito:misi@ligo.caltech.edu" target="_blank">'
         'report an issue</a>.</p>\n'
     ]

@@ -134,7 +134,7 @@ fi
 DEFAULTCONFIG=${CONFIGDIR}/defaults.ini
 UNIVERSE="local"
 TIMEOUT="2"
-OPTIONS="--day ${DAY} --verbose --archive --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
+OPTIONS="--day ${DAY} --verbose --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
 ARGUMENTS=$(eval echo ${CLARGS})
 
 # run job and capture DAGMan process ID

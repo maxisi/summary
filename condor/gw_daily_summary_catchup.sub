@@ -5,11 +5,11 @@
 # Condor submit file for core daily summary processing
 
 universe = local
-executable = /home/max.isi/summary/bin/gw_daily_summary
+executable = /home/max.isi/summary/bin/gw_daily_summary_catchup
 
-output = /usr1/max.isi/summary/gw_daily_summary.out
-error = /usr1/max.isi/summary/gw_daily_summary.err
-log = /usr1/max.isi/summary/gw_daily_summary.log
+output = /usr1/max.isi/summary/gw_daily_summary_catchup.out
+error = /usr1/max.isi/summary/gw_daily_summary_catchup.err
+log = /usr1/max.isi/summary/gw_daily_summary_catchup.log
 
 on_exit_remove = false
 cron_minute = 00
