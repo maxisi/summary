@@ -94,7 +94,7 @@ if codestatus == 0:
         '<h2>Code status: '
         '<font color="green">alive</font></h2>\n',
         '<p>The cron job is currently running.</p>\n',
-        '<p> If some of the plots are not dislaying correctly, check the '
+        '<p> If some of the plots are not displaying correctly, check the '
         'status of the individual configuration files below to see if there '
         'are syntax errors (click on the "err" link to see the error message, '
         'if one was produced).</p>\n',
