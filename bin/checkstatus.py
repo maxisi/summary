@@ -7,7 +7,9 @@ import datetime
 from numpy import loadtxt
 import subprocess
 
+USER = os.environ['USER']
 HOME = os.environment["HOME"]
+TMPDIR = '/usr1/%s/' % USER
 WEB = os.path.join(HOME, "public_html/summary/")
 
 if len(sys.argv) == 2:
@@ -66,7 +68,7 @@ else:
 
 # GET STATUS: 0, alive; 1, dead; 2, maintenance.
 codestatus = 1
-STATUSPATH = os.path.join(os.environ['TMPDIR'], 'summary/', 'status')
+STATUSPATH = os.path.join(TMPDIR, 'summary/', 'status')
 try:
     manualstatus = loadtxt(STATUSPATH)
     print "Manual status code is %r." % manualstatus
@@ -76,7 +78,6 @@ except IOError:
     
 if manualstatus == 0:
     # check condor queue
-    USER = os.environ['USER']
     cmd = subprocess.Popen('condor_q %s' % USER, shell=True,
                            stdout=subprocess.PIPE)
     for line in cmd.stdout:
