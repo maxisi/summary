@@ -10,13 +10,14 @@ import subprocess
 if len(sys.argv) == 2:
     logdir = os.path.abspath(sys.argv[1])
 else:
-    logdir = os.getcwd()
+    logdir = "/home/max.isi/public_html/summary/logs/" 
 
 TODAY = datetime.datetime.utcnow().strftime('%Y-%m-%d')
 
 # GET LOGS
 filedict = {}
 filesfound = 0
+configerror = 0
 if os.path.isdir(logdir):
     pathmask = os.path.join(logdir, "gw_summary_pipe-*.out")
     print "Looking for files matching: %s." % pathmask
@@ -36,8 +37,8 @@ if os.path.isdir(logdir):
                 for line in lines:
                     if line.startswith("Processing") \
                             and not line.endswith("state\n"):
-                        tabname = line.strip("Processing ").split('/')[0]
-                        tablist.append(tabname)
+                        tabname = line.replace("Processing ",'').split('/')[0]
+                        tablist.append(tabname.strip())
                 tablist = set(tablist)
 
                 # compose title
@@ -51,7 +52,10 @@ if os.path.isdir(logdir):
                 errfile = os.path.join(logdir, "gw_summary_pipe%s.err" %
                                        fileid)
                 with open(errfile, 'r') as ferr:
-                    filedict[fileid][1] = ferr.read()
+                    errmessage = ferr.read()
+                    filedict[fileid][1] = errmessage
+                    if errmessage != '':
+                        configerror = 1
             else:
                 print("File not valid.\n")
 else:
@@ -113,10 +117,25 @@ else:
         'report this</a>.</p>\n'
     ]
 
-contentlines += [
-    '<h2>Configuration file status:</h1>\n',
-    '<ul>\n',
-]
+if configerror == 0:
+    if filesfound != 0:
+        contentlines += [
+            '<h2>Configuration file status: ',
+            '<font color="green">OK</font></h2>\n',
+            '<ul>\n',
+        ]
+    else:
+        contentlines += [
+            '<h2>Configuration file status: ',
+            '<font color="orange">unknown</font></h2>\n',
+            '<ul>\n',
+        ]
+else:
+    contentlines += [
+        '<h2>Configuration file status: ',
+        '<font color="red">error</font></h2>\n',
+        '<ul>\n',
+    ]
 
 for fileid, contents in filedict.iteritems():
     name = contents[0].strip('/')
@@ -141,7 +160,7 @@ if filesfound == 0:
 
 contentlines.append("</ul>\n")
 
-now = datetime.datetime.utcnow().strftime('%Y-%m-%d %X')
+now = datetime.datetime.utcnow().strftime('%Y-%m-%d %X UTC')
 contentlines.append("<p>Last updated: %s.</p>" % now)
 
 headerlines = [
@@ -154,7 +173,7 @@ headerlines = [
     '<link media="all" href="html/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" rel="stylesheet" />\n',
     '<link media="all" href="html/gwsummary2.css" type="text/css" rel="stylesheet" />\n',
     '<link media="all" href="html/gw_L1.css" type="text/css" rel="stylesheet" />\n',
-    '<title>IFO summary</title>\n',
+    '<title>Code status</title>\n',
     '<script src="html/jquery-1.10.2.min.js" type="text/javascript"></script>\n', '<script src="html/moment.min.js" type="text/javascript"></script>\n',
     '<script src="html/js/bootstrap.min.js" type="text/javascript"></script>\n', '<script src="html/bootstrap-datepicker.js" type="text/javascript"></script>\n',
     '<script src="html/fancybox/source/jquery.fancybox.pack.js?v=2.1.5" type="text/javascript"></script>\n', '<script src="html/gwsummary.js" type="text/javascript"></script>\n',
@@ -239,7 +258,7 @@ footerlines = [
 
 htmllines = headerlines + contentlines + footerlines
 
-htmlpath = 'status.html'
+htmlpath = '/home/max.isi/public_html/summary/status.html'
 with open(htmlpath, 'w') as f:
     for line in htmllines:
         f.write(line)
