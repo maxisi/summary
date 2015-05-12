@@ -7,10 +7,13 @@ import datetime
 from numpy import loadtxt
 import subprocess
 
+HOME = os.environment["HOME"]
+WEB = os.path.join(HOME, "public_html/summary/")
+
 if len(sys.argv) == 2:
     logdir = os.path.abspath(sys.argv[1])
 else:
-    logdir = "/home/max.isi/public_html/summary/logs/" 
+    logdir = os.path.join(WEB, "logs/") 
 
 TODAY = datetime.datetime.utcnow().strftime('%Y-%m-%d')
 
@@ -258,7 +261,7 @@ footerlines = [
 
 htmllines = headerlines + contentlines + footerlines
 
-htmlpath = '/home/max.isi/public_html/summary/status.html'
+htmlpath = os.path.join(WEB, 'status.html')
 with open(htmlpath, 'w') as f:
     for line in htmllines:
         f.write(line)
