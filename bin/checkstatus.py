@@ -8,7 +8,7 @@ from numpy import loadtxt
 import subprocess
 
 USER = os.environ['USER']
-HOME = os.environment["HOME"]
+HOME = os.environ["HOME"]
 TMPDIR = '/usr1/%s/' % USER
 WEB = os.path.join(HOME, "public_html/summary/")
 
@@ -93,7 +93,7 @@ if codestatus == 0:
     contentlines = [
         '<h2>Code status: '
         '<font color="green">alive</font></h2>\n',
-        '<p>The code is currently running.</p>\n',
+        '<p>The cron job is currently running.</p>\n',
         '<p> If some of the plots are not dislaying correctly, check the '
         'status of the individual configuration files below to see if there '
         'are syntax errors (click on the "err" link to see the error message, '
