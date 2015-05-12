@@ -1,0 +1,7 @@
+#!/bin/bash -l
+
+NODUSWEB=/users/public_html/detcharsummary
+RUN_DIRECTORY=$HOME/public_html/summary/
+
+rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
+
