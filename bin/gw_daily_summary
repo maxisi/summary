@@ -177,11 +177,11 @@ echo "DAG has exited"
 if [ -f ${DAGFILE}.rescue001 ]; then
     echo "Something broke, the rescue DAG was generated." 1>&2
     # push to 40m
-    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
+#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 1
 else
     echo "Summary page run complete!"
     # push to 40m
-    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
+#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 0
 fi
