@@ -1,9 +1,4 @@
 
 --This line, and those below, will be ignored--
 
-M    README.txt
-M    c1vac.ini
-M    c1sandbox.ini
-M    c1pem.ini
-M    defaults.ini
-M    c1ioo.ini
+A    c1summary.ini
