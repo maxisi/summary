@@ -19,24 +19,29 @@ else:
 
 TODAY = datetime.datetime.utcnow().strftime('%Y-%m-%d')
 
+VERBOSE = 0
+
 # GET LOGS
 filedict = {}
 filesfound = 0
 configerror = 0
 if os.path.isdir(logdir):
     pathmask = os.path.join(logdir, "gw_summary_pipe-*.out")
-    print "Looking for files matching: %s." % pathmask
+    if VERBOSE:
+        print "Looking for files matching: %s." % pathmask
     # get all out log files
     for outfile in glob(pathmask):
         filename = os.path.basename(outfile)
-        print("Checking %s. " % filename)
+        if VERBOSE:
+            print("Checking %s. " % filename)
         fileid = filename.strip('gw_summary_pipe').strip('.out')
         tablist = []
         with open(outfile, 'r') as fout:
             lines = fout.readlines()
             # check file has the right date
             if lines[6].startswith("Start time") and lines[6].split()[2]:
-                print("File is valid.\n")
+                if VERBOSE:
+                    print("File is valid.\n")
                 filesfound += 1
                 # find tabs included in file
                 for line in lines:
@@ -64,17 +69,20 @@ if os.path.isdir(logdir):
             else:
                 print("File not valid.\n")
 else:
-    print "Log directory not found (%r)." % logdir
+    if VERBOSE:
+        print "Log directory not found (%r)." % logdir
 
 # GET STATUS: 0, alive; 1, dead; 2, maintenance.
 codestatus = 1
 STATUSPATH = os.path.join(TMPDIR, 'summary/', 'status')
 try:
     manualstatus = loadtxt(STATUSPATH)
-    print "Manual status code is %r." % manualstatus
+    if VERBOSE:
+        print "Manual status code is %r." % manualstatus
 except IOError:
     manualstatus = 0
-    print "Manual status file not found: %r." % STATUSPATH
+    if VERBOSE:
+        print "Manual status file not found: %r." % STATUSPATH
     
 if manualstatus == 0:
     # check condor queue
@@ -84,7 +92,8 @@ if manualstatus == 0:
         if "gw_daily_summary" in line:
             if line.split()[5] != 'H':
                 codestatus = 0
-                print "Condor job OK."
+                if VERBOSE:
+                    print "Condor job OK."
 else:
     codestatus = 2
 
@@ -266,4 +275,12 @@ htmlpath = os.path.join(WEB, 'status.html')
 with open(htmlpath, 'w') as f:
     for line in htmllines:
         f.write(line)
-    print "HTML written to %r" % htmlpath 
+    if VERBOSE:
+      print "HTML written to %r" % htmlpath
+
+try:
+  logpath = "/usr1/max.isi/summary/checkstatus-log" 
+  with open(logpath, 'w') as f:
+      f.write("Summary page status last checked %s.\n" % now)
+except:
+  pass
