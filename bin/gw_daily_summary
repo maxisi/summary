@@ -125,7 +125,7 @@ fi
 if [[ "${CLARGS}" == *"maxjobs"* ]]; then
     MAXJOBS=""
 else
-    MAXJOBS="--maxjobs 3"
+    MAXJOBS="--maxjobs 4"
 fi
 
 # set configuration
