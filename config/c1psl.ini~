@@ -5,50 +5,40 @@ layout = 2
 1 = C1:PSL-FSS_RMTEMP timeseries
 1-title = PSL Table Temperature
 1-ylim = 20, 26
-1-legend-loc = 'best'
 1-ylabel = r'Temperature [deg C]'
 ; 1 year trend done to set above limits
 
 2 = C1:PSL-FSS_SLOWDC.mean timeseries
 2-title = NPRO Slow actuator (3 GHz/V)
 2-ylim = -3, 3
-2-ylabel = 'Volts'
-2-legend-loc = 'best'
+3-ylabel = 'Volts'
 
 3 = C1:PSL-PMC_PZT.mean timeseries
 3-title = PMC PZT Voltage
 3-ylim = 0, 300
-3-legend-loc = 'best'
+3-legend-loc = 'lower left'
 3-ylabel = 'Volts'
 
 4 = C1:PSL-PMC_PMCTRANSPD.mean timeseries
 4-title = Pre-modecleaner Transmission
 4-ylim = 0.6, 0.9
-4-ylabel = 'Volts'
-4-legend-loc = 'best'
 
 5 = C1:PSL-PMC_RFPDDC.mean timeseries
 5-title = Pre-modecleaner Reflected Light
 5-ylim = 0, 0.1
-5-legend-loc = 'best'
-5-ylabel = 'Volts'
 
 6 = C1:PSL-FSS_PCDRIVE.mean timeseries
-6-title = r'IMC/FSS EOM drive'
+6-title = r'FSS EOM $V_{\rm RMS}$'
 6-ylim = 0, 10
-6-legend-loc = 'best'
-6-ylabel = '$V_{\rm RMS}$'
 
 7 = C1:IOO-QPD_ANG_HOR.mean,
     C1:IOO-QPD_ANG_VERT.mean timeseries
 7-ylim = -2, 2
-7-title = r'Input Pointing into the IMC'
-7-legend-loc = 'best'
+7-title = IOO
 
 8 = C1:PSL-FSS_FAST.mean timeseries
 8-title= r'NPRO PZT (1.1 MHz/V)'
 8-ylim = -5, 5
 8-ylabel = 'Volts'
-8-legend-loc = 'best'
 
 ;-------------------------------------------------------------------------
