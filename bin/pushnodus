@@ -5,6 +5,7 @@ RUN_DIRECTORY=$HOME/public_html/summary/
 
 TODAY=`date +%Y%m%d`
 YESTERDAY=`date --date='yesterday' +%Y%m%d`
+TOMORROW=`date --date='tomorrow' +%Y%m%d`
 
 ######################################################################################
 # Make absoulute references relative
@@ -13,7 +14,7 @@ cd ${RUN_DIRECTORY}/day
 
 # Loop over days
 for d0 in */ ; do
-  if [[ "$d0" == ${TODAY}"/" || $d0 == ${YESTERDAY}"/" ]]; then 
+  if [[ "$d0" == ${TODAY}"/" || $d0 == ${YESTERDAY}"/" || "$d0" == ${TOMORROW}"/" ]]; then 
     cd $d0
     count=`ls -1 *.html 2>/dev/null | wc -l`
     if [ $count != 0 ]; then
@@ -52,6 +53,9 @@ rsync --exclude archive/ -r ${RUN_DIRECTORY}/day/${TODAY}/ controls@nodus.ligo.c
 
 rsync --exclude archive/ -r ${RUN_DIRECTORY}/day/${YESTERDAY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB}/day/${YESTERDAY} 
 
+if [ -d "${RUN_DIRECTORY}/day/${TOMORROW}" ]; then
+  rsync --exclude archive/ -r ${RUN_DIRECTORY}/day/${TOMORROW}/ controls@nodus.ligo.caltech.edu:${NODUSWEB}/day/${TOMORROW} 
+fi
 {
   LOGDIR=/usr1/max.isi/summary/pushnodus-log
   NOW=$(lalapps_tconvert now)
