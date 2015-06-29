@@ -49,9 +49,9 @@ done
 ######################################################################################
 # Perform sync
 
-scp ${RUN_DIRECTORY}/status.html controls@nodus.ligo.caltech.edu:${NODUSWEB}/status.html
+scp ${RUN_DIRECTORY}/status.html controls@nodus.ligo.caltech.edu:${NODUSWEB}/status.html > /dev/null 2>&1
 
-rsync --exclude archive/ -r ${RUN_DIRECTORY}/logs/ controls@nodus.ligo.caltech.edu:${NODUSWEB}/logs/
+rsync --exclude archive/ -r ${RUN_DIRECTORY}/logs/ controls@nodus.ligo.caltech.edu:${NODUSWEB}/logs
 
 rsync --exclude archive/ -r ${RUN_DIRECTORY}/day/${TODAY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB}/day/${TODAY}
 
