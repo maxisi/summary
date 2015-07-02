@@ -11,6 +11,7 @@ output = /usr1/max.isi/summary/gw_daily_summary_catchup.out
 error = /usr1/max.isi/summary/gw_daily_summary_catchup.err
 log = /usr1/max.isi/summary/gw_daily_summary_catchup.log
 
+periodic_hold = false
 on_exit_remove = false
 cron_minute = 00
 cron_hour = 17
