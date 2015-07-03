@@ -14,12 +14,12 @@
 
 echo ${X509_USER_PROXY}
 
-REPODIR=${HOME}/summary
+REPODIR=/home/max.isi/summary
 CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
 NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
 NODUSWEB=/users/public_html/detcharsummary
-RUN_DIRECTORY=$HOME/public_html/summary/
+RUN_DIRECTORY=/home/max.isi/public_html/summary/
 
 # MI: not sure what this does...
 #if [ "${USER}" == "detchar" ]; then
@@ -134,7 +134,7 @@ if [[ "${CLARGS}" == *"config-file"* ]]; then
     PRIORITYARG=""
 else
     # generate option string from files in configuration directory
-    ${HOME}/summary/bin/configlist.py ${IFO}
+    ${REPODIR}/bin/configlist.py ${IFO}
     # load string into CONFIGARG variable
     PRIORITYARG=""
     CONFIGARG=$(<${TMPDIR}/summary/configstr.txt)
