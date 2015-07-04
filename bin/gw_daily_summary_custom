@@ -10,17 +10,45 @@
 # before this DAG is submitted to the condor job scheduler
 #
 
+source /home/max.isi/.bash_profile
+
+echo ${X509_USER_PROXY}
+
+REPODIR=${HOME}/summary40m
+CONFIGDIR=${REPODIR}/config
+LOGDIR=${TMPDIR}/summary40m/logs
+
+NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
+NODUSWEB=/users/public_html/detcharsummary
+
+# create directories if necessary
+
+if [ ! -d "$REPODIR" ]; then
+  mkdir $REPODIR
+fi
+
+if [ ! -d "$CONFIGDIR" ]; then
+  mkdir $CONFIGDIR
+fi
+
+if [ ! -d "$LOGDIR" ]; then
+  mkdir $LOGDIR
+fi
+
+# refresh configurations
+
+rsync -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/ ${CONFIGDIR}  
+
 . ~/.bash_profile
 
 echo ${X509_USER_PROXY}
 
-REPODIR=${HOME}/summary
+REPODIR=/home/max.isi/summary
 CONFIGDIR=${REPODIR}/config
 LOGDIR=${TMPDIR}/summary/logs
 NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
 NODUSWEB=/users/public_html/detcharsummary
-
-
+RUN_DIRECTORY=/home/max.isi/public_html/summary/
 
 # MI: not sure what this does...
 #if [ "${USER}" == "detchar" ]; then
@@ -34,7 +62,14 @@ git pull --rebase
 rm -r ${CONFIGDIR}/*
 
 # pull from nodus
-scp -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/* ${CONFIGDIR}/
+scp -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/* /home/max.isi/summary/config/
+
+# push
+cd ${REPODIR}
+NOW=$(lalapps_tconvert now)
+git add .
+git commit -m"auto ${NOW}"
+git push
 
 # catch command line options
 CLARGS=$@
@@ -77,17 +112,16 @@ fi
 set -e
 
 # set output directory
-RUN_DIRECTORY=$HOME/public_html/summary/
 mkdir -p ${RUN_DIRECTORY}
 # clean previous DAGs
 {
-  rm ${RUN_DIRECTORY}/gw_summary_custom*
+  rm ${RUN_DIRECTORY}/gw_summary_pipe*
 } || {
   echo "No previous DAGs."
 }
 # clean previous logs
 {
-  rm ${RUN_DIRECTORY}/logs/gw_summary_custom*
+  rm ${RUN_DIRECTORY}/logs/*
 } || {
   echo "No previous logs."
 }
@@ -120,7 +154,7 @@ fi
 if [[ "${CLARGS}" == *"maxjobs"* ]]; then
     MAXJOBS=""
 else
-    MAXJOBS="--maxjobs 2"
+    MAXJOBS="--maxjobs 4"
 fi
 
 # set configuration
@@ -129,7 +163,7 @@ if [[ "${CLARGS}" == *"config-file"* ]]; then
     PRIORITYARG=""
 else
     # generate option string from files in configuration directory
-    ${HOME}/summary/bin/configlist.py ${IFO}
+    ${REPODIR}/bin/configlist.py ${IFO}
     # load string into CONFIGARG variable
     PRIORITYARG=""
     CONFIGARG=$(<${TMPDIR}/summary/configstr.txt)
@@ -139,7 +173,7 @@ fi
 DEFAULTCONFIG=${CONFIGDIR}/defaults.ini
 UNIVERSE="local"
 TIMEOUT="2"
-OPTIONS="--verbose --file-tag gw_summary_custom --skip-html-wrapper --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
+OPTIONS="--verbose --archive --ifo ${IFO} --log-dir ${LOGDIR} --global-config ${DEFAULTCONFIG} ${CONFIGARG} ${PRIORITYARG} --universe ${UNIVERSE} --condor-timeout ${TIMEOUT} --on-segdb-error warn ${MAXPROC} ${MAXJOBS}"
 ARGUMENTS=$(eval echo ${CLARGS})
 
 # run job and capture DAGMan process ID
@@ -171,12 +205,12 @@ done
 echo "DAG has exited"
 if [ -f ${DAGFILE}.rescue001 ]; then
     echo "Something broke, the rescue DAG was generated." 1>&2
-    echo "Changes not pushed to Nodus."
+    # push to 40m
+#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 1
 else
     echo "Summary page run complete!"
     # push to 40m
-    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
-    echo "Changes pushed to Nodus."
+#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 0
 fi
