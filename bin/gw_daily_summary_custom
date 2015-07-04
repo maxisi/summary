@@ -4,72 +4,39 @@
 # LIGO daily summary page script
 #
 # Author: Duncan Macleod <duncan.macleod@ligo.org>
-# Modified by: Max
+# Modified by: Max Isi
 #
 # A pipeline is generated using the gw_summary_pipe DAG generator
 # before this DAG is submitted to the condor job scheduler
-#
+
+echo "Beginning 40m summary page process"
 
 source /home/max.isi/.bash_profile
 
-echo ${X509_USER_PROXY}
-
-REPODIR=${HOME}/summary40m
-CONFIGDIR=${REPODIR}/config
+REPODIR=/home/max.isi/summary
+CONFIGDIR=${HOME}/summary40m/config
 LOGDIR=${TMPDIR}/summary40m/logs
-
 NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
 NODUSWEB=/users/public_html/detcharsummary
+RUNDIR=${HOME}/public_html/summary/
 
 # create directories if necessary
 
-if [ ! -d "$REPODIR" ]; then
-  mkdir $REPODIR
-fi
-
 if [ ! -d "$CONFIGDIR" ]; then
-  mkdir $CONFIGDIR
+  mkdir -p $CONFIGDIR
 fi
 
 if [ ! -d "$LOGDIR" ]; then
-  mkdir $LOGDIR
+  mkdir -p $LOGDIR
 fi
+
+echo "Configurations: $CONFIGDIR"
+echo "Logs: $LOGDIR"
+echo "HTML output: $RUNDIR"
 
 # refresh configurations
 
 rsync -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/ ${CONFIGDIR}  
-
-. ~/.bash_profile
-
-echo ${X509_USER_PROXY}
-
-REPODIR=/home/max.isi/summary
-CONFIGDIR=${REPODIR}/config
-LOGDIR=${TMPDIR}/summary/logs
-NODUSCONFIG=/cvs/cds/caltech/chans/GWsummaries
-NODUSWEB=/users/public_html/detcharsummary
-RUN_DIRECTORY=/home/max.isi/public_html/summary/
-
-# MI: not sure what this does...
-#if [ "${USER}" == "detchar" ]; then
-#    unset X509_USER_PROXY
-#fi
-
-# refresh configurations
-cd ${REPODIR}
-git pull --rebase
-
-rm -r ${CONFIGDIR}/*
-
-# pull from nodus
-scp -r controls@nodus.ligo.caltech.edu:${NODUSCONFIG}/* /home/max.isi/summary/config/
-
-# push
-cd ${REPODIR}
-NOW=$(lalapps_tconvert now)
-git add .
-git commit -m"auto ${NOW}"
-git push
 
 # catch command line options
 CLARGS=$@
@@ -82,7 +49,6 @@ LALSUITE_TAG=de671f
 . /home/detchar/opt/lalsuite/${LALSUITE_TAG}/etc/lalsuiterc
 
 # set GWpy environment
-. /home/max.isi/.bashrc
 #. /home/detchar/opt/gwpysoft/etc/gwpy-user-env.sh
 
 echo "Environment set"
@@ -112,21 +78,22 @@ fi
 set -e
 
 # set output directory
-mkdir -p ${RUN_DIRECTORY}
+mkdir -p ${RUNDIR}
+
 # clean previous DAGs
 {
-  rm ${RUN_DIRECTORY}/gw_summary_pipe*
+  rm ${RUNDIR}/gw_summary_pipe*
 } || {
   echo "No previous DAGs."
 }
 # clean previous logs
 {
-  rm ${RUN_DIRECTORY}/logs/*
+  rm ${RUNDIR}/logs/*
 } || {
   echo "No previous logs."
 }
-cd ${RUN_DIRECTORY}
-echo "Moved to output directory ${RUN_DIRECTORY}"
+cd ${RUNDIR}
+echo "Moved to output directory ${RUNDIR}"
 echo "----------"
 
 # interpolate IFO
@@ -206,11 +173,11 @@ echo "DAG has exited"
 if [ -f ${DAGFILE}.rescue001 ]; then
     echo "Something broke, the rescue DAG was generated." 1>&2
     # push to 40m
-#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
+#    rsync --exclude archive/ -r ${RUNDIR}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 1
 else
     echo "Summary page run complete!"
     # push to 40m
-#    rsync --exclude archive/ -r ${RUN_DIRECTORY}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
+#    rsync --exclude archive/ -r ${RUNDIR}/ controls@nodus.ligo.caltech.edu:${NODUSWEB} 
     exit 0
 fi
