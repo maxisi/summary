@@ -130,7 +130,7 @@ if [[ "${CLARGS}" == *"config-file"* ]]; then
     PRIORITYARG=""
 else
     # generate option string from files in configuration directory
-    ${REPODIR}/bin/configlist.py ${IFO}
+    ${REPODIR}/bin/configlist.py ${IFO} ${CONFIGDIR} 
     # load string into CONFIGARG variable
     PRIORITYARG=""
     CONFIGARG=$(<${TMPDIR}/summary/configstr.txt)
