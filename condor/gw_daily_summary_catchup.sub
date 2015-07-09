@@ -6,6 +6,7 @@
 
 universe = local
 executable = /home/max.isi/summary/bin/gw_daily_summary_catchup
+accounting_group = ligo.dev.o1.detchar.daily.summary
 
 output = /usr1/max.isi/summary/gw_daily_summary_catchup.out
 error = /usr1/max.isi/summary/gw_daily_summary_catchup.err

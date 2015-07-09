@@ -11,7 +11,7 @@
 
 echo "Beginning 40m summary page process"
 
-source /home/max.isi/.bash_profile
+# source /home/max.isi/.bash_profile
 
 REPODIR=/home/max.isi/summary
 CONFIGDIR=${HOME}/summary40m/config
@@ -49,7 +49,7 @@ LALSUITE_TAG=de671f
 . /home/detchar/opt/lalsuite/${LALSUITE_TAG}/etc/lalsuiterc
 
 # set GWpy environment
-#. /home/detchar/opt/gwpysoft/etc/gwpy-user-env.sh
+. /home/detchar/opt/gwpysoft/etc/gwpy-user-env.sh
 
 echo "Environment set"
 
