@@ -3,10 +3,13 @@
 # Copyright (C): Duncan Macleod (2014)
 #
 # Condor submit file for core daily summary processing
+#
+# Note: adapted for the 40m by Max Isi (July 2015)
 
 universe = local
 executable = /home/40m/summary/bin/gw_daily_summary
 accounting_group = ligo.dev.o1.detchar.daily.summary
+accounting_group_user = max.isi
 
 output = /usr1/40m/summary/gw_daily_summary.out
 error = /usr1/40m/summary/gw_daily_summary.err
