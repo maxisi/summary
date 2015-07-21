@@ -38,7 +38,7 @@ update_40m_config
 echo "Pulled from 40m"
 
 # -- set kerberos environment -------------------
-[ "${USER}" == "max.isi" ] && get_robot_kerberos_ticket
+get_robot_kerberos_ticket
 check_kerberos_ticket || exit $?
 echo "Kerberos ticket verified"
 
@@ -59,9 +59,6 @@ OPTIONS="
 --verbose ${FILETAG} --archive --ifo ${ifo} --log-dir ${LOGDIR}
 ${CONFIGURATIONS} ${CONDORCMD} ${MAXJOBS} ${NPROC} --on-segdb-error warn"
 ARGUMENTS=$(eval echo ${SUMMARY_ARGUMENTS})
-
-which gw_summary
-which gw_summary_pipe
 
 # run job and capture DAGMan process ID
 _SUMMARY_CMD="gw_summary_pipe $OPTIONS $ARGUMENTS"
