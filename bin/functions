@@ -9,6 +9,7 @@
 
 # basic variables
 [ -z "$USER" ] && USER=`whoami`
+[ -z "$ACCOUNT_GROUP_USER" ] && ACCOUNT_GROUP_USER="max.isi"
 
 # summary variables
 [ -z "$SUMMARY_OUT" ] && SUMMARY_OUT="${HOME}/public_html/summary"
@@ -247,7 +248,7 @@ get_condor_accounting_cmd() {
     else
         local mode="dev"
     fi
-    echo "--condor-command=accounting_group=ligo.$mode.o1.detchar.daily.summary"
+    echo "--condor-command=accounting_group=ligo.$mode.o1.detchar.daily.summary --condor-command=accounting_group_user=${ACCOUNT_GROUP_USER}"
 }
 
 get_condor_notify_cmd() {
