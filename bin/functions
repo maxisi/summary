@@ -2,6 +2,8 @@
 #
 # this file contains the common functions for GW summary page automation
 #
+# Note: modified by Max Isi for the 40m (July 16, 2015)
+#   - Default Kerberos credentials.
 
 # -- variables ----------------------------------------------------------------
 
@@ -12,6 +14,7 @@
 [ -z "$SUMMARY_OUT" ] && SUMMARY_OUT="${HOME}/public_html/summary"
 [ -z "$SUMMARY_REPO" ] && SUMMARY_REPO="${HOME}/etc/summary"
 [ -z "$SUMMARY_CONFIG" ] && SUMMARY_CONFIG="${SUMMARY_REPO}/configurations"
+[ -z "$LOGDIR" ] && LOGDIR="${SUMMARY_OUT}/logs"
 
 if [ "${USER}" == "detchar" ]; then
     unset X509_USER_PROXY
@@ -59,13 +62,13 @@ date_yesterday() {
 # get kerberos ticket
 get_robot_kerberos_ticket() {
     export KRB5CCNAME=${TMPDIR}/gw_summary_ligo.org.krb5
-    export KRB5_KTNAME=${HOME}/.kerberos/detchar-LDG-service-pcdev2.keytab
+    export KRB5_KTNAME=${HOME}/.kerberos/40m.robot.ldas-pcdev1.ligo.caltech.edu
     if [ -f ${KRB5_KTNAME} ]; then
-        local LIGO_USER="detchar-LDG/service"
+        local LIGO_USER="40m/robot/ldas-pcdev1.ligo.caltech.edu"
         local exitcode=`get_exit_code "kinit -kft ${KRB5_KTNAME} ${LIGO_USER}@LIGO.ORG 1> /dev/null"`
     else
-        local LIGO_USER="duncan.macleod"
-        export KRB5_KTNAME=${HOME}/.kerberos/duncan.macleod.keytab
+        local LIGO_USER="max.isi"
+        export KRB5_KTNAME=${HOME}/.kerberos/max.isi.keytab
         local exitcode=`get_exit_code "kinit -kft ${KRB5_KTNAME} ${LIGO_USER}@LIGO.ORG 1> /dev/null"`
     fi
     if [ $exitcode -eq 0 ]; then
@@ -280,7 +283,7 @@ get_condor_arguments() {
 
 wait_for_dag_and_exit() {
     local dagfile=$1
-    [ -z ${SUMMARY_JOB} ] && local SUMMARY_JOB="${dagfile##*/}"
+    [ -z ${SUMMARY_JOB} ] && local SUMMARY_JOB=`basename ${dagfile%.*}`
     # wait for 10 seconds for DAG lock file to generate
     sleep 10
     # wait for lock file to disappear
@@ -297,8 +300,11 @@ wait_for_dag_and_exit() {
         CID=$(condor_q -wide $USER | grep ${SUMMARY_JOB} | cut -d\  -f 1)
         # reset condor shadow parameters to prevent annoying hold
         if [ -n "${CID}" ]; then
+            echo "Resetting shadow parameters for condor id $CID..."
             condor_qedit ${CID} NumShadowExceptions 0
             condor_qedit ${CID} NumShadowStarts 0
+        else
+            echo "Failed to find condor id for persistent job ${SUMMARY_JOB}"
         fi
         # move DAG logfile out of the way to prevent continuous append
         mv ${dagfile}.dagman.out ${dagfile}.dagman.out.old
@@ -316,18 +322,19 @@ update_40m_config() {
     local _host="nodus.ligo.caltech.edu"
     local _path="/cvs/cds/caltech/chans/GWsummaries"
 
+    echo ${target}
     # pull from nodus if we can
     mkdir -p $target
     rsync -r ${_user}@${_host}:${_path}/* ${target}/ || true
 
-    # push changes to git backup
-    if [[ -d "${target}/.git" ]]; then
-        cd ${target}
-        NOW=$(lalapps_tconvert now)
-        git add .
-        git commit -m "auto ${NOW}"
-        git push
-    fi
+#     # push changes to git backup
+#     if [[ -d "${target}/.git" ]]; then
+#         cd ${target}
+#         NOW=$(lalapps_tconvert now)
+#         git add .
+#         git commit -m "auto ${NOW}"
+#         git push
+#     fi
 
     # find all systems
     export SUMMARY_SYSTEMS=`find_all_systems $target $ifo`
