@@ -86,7 +86,7 @@ except IOError:
     
 if manualstatus == 0:
     # check condor queue
-    cmd = subprocess.Popen('condor_q %s' % USER, shell=True,
+    cmd = subprocess.Popen('condor_q | grep %s' % USER, shell=True,
                            stdout=subprocess.PIPE)
     for line in cmd.stdout:
         if "gw_daily_summary" in line:
