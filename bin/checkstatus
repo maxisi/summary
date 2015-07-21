@@ -212,7 +212,7 @@ headerlines = [
     '</a>\n',
     '<ul class="dropdown-menu">\n',
     '<li>\n',
-    '<a class="ifo-switch" data-new-base="https://ldas-jobs.ligo.caltech.edu/~max.isi/summary">C1</a>\n',
+    '<a class="ifo-switch" data-new-base="https://ldas-jobs.ligo.caltech.edu/~40m/summary">C1</a>\n',
     '</li>\n',
     '<li>\n',
     '<a class="ifo-switch" data-new-base="https://ldas-jobs.ligo.caltech.edu/~detchar/summary">L1</a>\n',
@@ -280,7 +280,7 @@ with open(htmlpath, 'w') as f:
       print "HTML written to %r" % htmlpath
 
 try:
-  logpath = "/usr1/max.isi/summary/checkstatus-log" 
+  logpath = "/usr1/40m/summary/checkstatus-log" 
   with open(logpath, 'w') as f:
       f.write("Summary page status last checked %s.\n" % now)
 except:
