@@ -70,7 +70,7 @@ if [ ! -f *.lock ]; then
     }
     # clean previous logs
     {
-    rm ${LOGDIR}/*
+    rm ${LOGDIR}/${FILETAG}*
     echo "Removed old logs."
     } || {
     echo "No previous logs."
