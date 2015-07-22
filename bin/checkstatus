@@ -26,7 +26,7 @@ filedict = {}
 filesfound = 0
 configerror = 0
 if os.path.isdir(logdir):
-    pathmask = os.path.join(logdir, "gw_summary_pipe-*.out")
+    pathmask = os.path.join(logdir, "gw_daily_summary-*.out")
     if VERBOSE:
         print "Looking for files matching: %s." % pathmask
     # get all out log files
@@ -34,7 +34,7 @@ if os.path.isdir(logdir):
         filename = os.path.basename(outfile)
         if VERBOSE:
             print("Checking %s. " % filename)
-        fileid = filename.strip('gw_summary_pipe').strip('.out')
+        fileid = filename.strip('gw_daily_summary').strip('.out')
         tablist = []
         with open(outfile, 'r') as fout:
             lines = fout.readlines()
@@ -59,7 +59,7 @@ if os.path.isdir(logdir):
                 # add entry for file: first element tabs, second error message
                 filedict[fileid] = [tabstring, '']
                 # open corresponding err file
-                errfile = os.path.join(logdir, "gw_summary_pipe%s.err" %
+                errfile = os.path.join(logdir, "gw_daily_summary%s.err" %
                                        fileid)
                 with open(errfile, 'r') as ferr:
                     errmessage = ferr.read()
@@ -155,8 +155,8 @@ for fileid, contents in filedict.iteritems():
     name = contents[0].strip('/')
     if name == '':
         name = "Unknown name"
-    logurl = "logs/gw_summary_pipe%s.out" % fileid
-    errurl = "logs/gw_summary_pipe%s.err" % fileid
+    logurl = "logs/gw_daily_summary%s.out" % fileid
+    errurl = "logs/gw_daily_summary%s.err" % fileid
     if contents[1] == '':
         filestatus = '<font color="green">OK</font>'
     else:
